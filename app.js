@@ -29,7 +29,7 @@ const phones = [
         ram: 12,
         rom: 512,
         camera: '25 megapixel',
-        price: 13000
+        price: 15000
     },
     {
         brand: 'Iphone',
@@ -37,7 +37,7 @@ const phones = [
         ram: 4,
         rom: 1024,
         camera: '30 megapixel',
-        price: 18000
+        price: 15000
     },
     {
         brand: 'Oppo',
@@ -45,7 +45,7 @@ const phones = [
         ram: 8,
         rom: 256,
         camera: '20 megapixel',
-        price: 20000
+        price: 15000
     },
     {
         brand: 'Vivo',
@@ -66,7 +66,6 @@ const phones = [
 
 ]
 
-
 let arr;
 let items = JSON.parse(localStorage.getItem('cartItems'));
 if(items === null){
@@ -75,32 +74,33 @@ if(items === null){
     arr = items;
 }
 
-const div = document.querySelector('.product');
-
-function renderitems(){
+const div = document.querySelector('.products');
+function renderItems (){
     for(let i = 0; i < phones.length; i++){
-        div.innerHTML +=`
-        <div class="card bg-dark text-light border-light" class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">${phones[i].brand +' '+ phones[i].model}</h5>
-          <p class="card-text">Rs ${phones[i].price}</p>
-         <button onclick=""addtocart(${i})  class="btn btn-primary">Add to cart</button>
+        div.innerHTML += `
+        <div class="card bg-dark text-light border-light" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">${phones[i].brand +' '+ phones[i].model}</h5>
+                <p class="card-text">Rs ${phones[i].price}</p>
+                <p class="card-text">Model ${phones[i].model}</p>
+                <p class="card-text">Ram ${phones[i].ram}</p>
+                <button onclick="addtocart(${i})" class="btn btn-primary">Add to Cart</button>
+            </div>
         </div>
-      </div>
-`
+        `
     }
 }
 
-renderitems()
+renderItems()
 
 function addtocart(index){
-   if(arr.includes(phones[index])){
-    phones[index].quantity += 1;
-   }else{
-    phones[Index].quantity = 1;
-    arr.push(phones[index]);
-   }
-   console.log(arr);
+    if(arr.includes(phones[index])){
+        phones[index].quantity += 1;
+    }else{
+        phones[index].quantity = 1;
+        arr.push(phones[index]);
+    }
+    console.log(arr);
 }
 
 function gotocart(){
@@ -108,4 +108,3 @@ function gotocart(){
     localStorage.setItem('cartItems' , JSON.stringify(arr));
     window.location = 'cart.html';
 }
-

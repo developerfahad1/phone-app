@@ -11,8 +11,10 @@ function renderItems (){
             console.log(cartItems[i]);
             div.innerHTML += `
             <div class="border border-light rounded m-5 p-3">
-            <h1>Model: ${cartItems[i].brand + ' ' + cartItems[i].model}</h1>
+            <h1>Name: ${cartItems[i].brand + ' ' + cartItems[i].model}</h1>
             <h1>Price: ${cartItems[i].price}</h1>
+            <h1>Model: ${cartItems[i].model}</h1>
+            <h1>Ram: ${cartItems[i].ram}</h1>
             </div>
             `
         }
@@ -26,11 +28,14 @@ function renderItems (){
 
 renderItems()
 
+function gotoback(){
+    location.href = 'index.html'
+}
 
 
-localStorage.setItem('kis naam sa krwana ha' , 'value stringify wali');
+// localStorage.setItem('kis naam sa krwana ha' , 'value stringify wali');
 
-localStorage.getItem('kis item sa save krwaya ha');
+// localStorage.getItem('kis item sa save krwaya ha');
 
-JSON.stringify()
-JSON.parse()
+// JSON.stringify()
+// JSON.parse()
