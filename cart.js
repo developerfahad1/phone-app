@@ -1,41 +1,74 @@
-console.log('cart items');
+let cartArray = JSON.parse(localStorage.getItem("cartItemss"));
+const cartData = document.querySelector("#cartData");
 
-const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-// console.log(cartItems)
+function renderArray(){
 
-const div = document.querySelector('div');
-
-function renderItems (){
-    if(cartItems != null && cartItems.length > 0){
-        for(let i = 0; i < cartItems.length; i++){
-            console.log(cartItems[i]);
-            div.innerHTML += `
-            <div class="border border-light rounded m-5 p-3">
-            <h1>Name: ${cartItems[i].brand + ' ' + cartItems[i].model}</h1>
-            <h1>Price: ${cartItems[i].price}</h1>
-            <h1>Model: ${cartItems[i].model}</h1>
-            <h1>Ram: ${cartItems[i].ram}</h1>
-            </div>
-            `
-        }
-    }else{
-        console.log('cart item empty ha maalik')
-        div.innerHTML = `
-        <h3 class="text-center">No Item Found...</h3>
-        `
-    }
+if(cartArray!=null && cartArray.length>0){
+  for (let i = 0; i < cartArray.length; i++) {
+    cartData.innerHTML += `<div class="card mt-3" style="width: 18rem;">
+  <div class="card-body bg-dark text-light">
+    <p class="card-text"> Product: ${
+      cartArray[i].brand + " " + cartArray[i].model
+    }</p>
+    <p class="card-text"> Camera: ${cartArray[i].camera}</p>
+    <p class="card-text">Ram: ${cartArray[i].ram} GB</p>
+    <p class="card-text">Rom: ${cartArray[i].rom} GB</p>
+    <p class="card-text">Quantity: <button onclick="AddQuantity(${i})">+</button> ${
+      cartArray[i].quantity
+    } <button onclick="SubQuantity(${i})">-</button></p>
+    <p class="card-text">Price: ${cartArray[i].price}</p>
+    <button class="btn btn-danger" onclick="removeBtn(${i})">Remove</button>
+  </div>
+</div>`;
+  }
+}else{
+  cartData.innerHTML=`<h2 class="text-center">No Items Found.....</h2>`
+}
 }
 
-renderItems()
+renderArray()
 
-function gotoback(){
-    location.href = 'index.html'
+function removeBtn(index){
+  cartArray.splice(index , 1);
+   localStorage.setItem("cartItemss", JSON.stringify(cartArray));
+   location.reload();
+
+
 }
 
 
-// localStorage.setItem('kis naam sa krwana ha' , 'value stringify wali');
+function AddQuantity(add) {
+  cartData.innerHTML=''
+  cartArray[add].quantity+=1;
+  renderArray();
+  total();
+  
+}
 
-// localStorage.getItem('kis item sa save krwaya ha');
 
-// JSON.stringify()
-// JSON.parse()
+function SubQuantity(sub){
+   if(cartArray[sub].quantity===1){
+    cartArray.splice(sub , 1);
+    localStorage.setItem("cartItemss", JSON.stringify(cartArray));
+    location.reload();
+    total();
+   }else{
+     cartData.innerHTML = "";
+     cartArray[sub].quantity -= 1;
+     renderArray();
+     total()
+    
+   }
+}
+
+const totalAmount= document.querySelector("#totalAmount");
+let totalPrice=0
+function total(){
+
+  for(let j=0 ; j<cartArray.length; j++){
+    totalPrice+=(cartArray[j].price*cartArray[j].quantity);
+  }
+  totalAmount.innerHTML=`<h3 class="text-light text-center mt-5">Total Amount : ${totalPrice} PKR <h3/>`
+}
+
+total()
